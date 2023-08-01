@@ -1,11 +1,15 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { GemelloUserContext } from 'src/common/decorators/gemelloUserContext.decorator';
 import { EventMessagePattern } from 'src/common/rabbitmq/patterns';
 import { GemelloUser } from 'src/common/types/user';
 import { OrganizationFacade } from 'src/organization/organization.facade';
 import { v4 as uuid } from 'uuid';
-import { MappedOrderCreateBody } from './models/orderRequestBody.model';
+import {
+  MappedOrderCreateBody,
+  MappedOrderPatchBody,
+  OrderPatchBody,
+} from './models/orderRequestBody.model';
 import { OrderRepository } from './order.repository';
 
 @Injectable()
@@ -42,6 +46,23 @@ export class OrderService {
     });
 
     return createdOrder;
+  }
+
+  public async patchOrder(
+    orderId: string,
+    { startDate, endDate, ...partialOrder }: MappedOrderPatchBody,
+  ) {
+    const order = await this.orderRepository.getOrderById(orderId);
+    if (!order) {
+      throw new NotFoundException('Order with given id does not exists');
+    }
+
+    return this.orderRepository.updateOrder(orderId, {
+      ...order,
+      ...partialOrder,
+      startDate: startDate?.toJSDate(),
+      endDate: endDate?.toJSDate(),
+    });
   }
 
   public async deleteOrder(orderId: string) {

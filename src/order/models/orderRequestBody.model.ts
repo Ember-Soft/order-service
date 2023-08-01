@@ -1,6 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { OrderStatus } from '@prisma/client';
-import { IsDateString, IsEnum, IsString } from 'class-validator';
+import { IsDateString, IsEnum, IsOptional, IsString } from 'class-validator';
 import { DateTime } from 'luxon';
 
 export class OrderCreateBody {
@@ -26,4 +26,15 @@ export interface MappedOrderCreateBody {
   endDate: DateTime;
   address: string;
   status: OrderStatus;
+}
+
+export class OrderPatchBody extends PartialType(OrderCreateBody) {
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  assistantId?: string;
+}
+
+export interface MappedOrderPatchBody extends Partial<MappedOrderCreateBody> {
+  assistantId?: string;
 }
