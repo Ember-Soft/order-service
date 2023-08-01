@@ -1,25 +1,6 @@
+import { OrderModule } from './order/order.module';
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ClientsModule, Transport } from '@nestjs/microservices';
+import { CoreModule } from './core/core.module';
 
-@Module({
-  imports: [
-    ClientsModule.register([
-      {
-        name: 'CHAT_SERVICE',
-        transport: Transport.RMQ,
-        options: {
-          urls: ['amqp://localhost:5672'],
-          queue: 'default',
-          queueOptions: {
-            durable: true,
-          },
-        },
-      },
-    ]),
-  ],
-  controllers: [AppController],
-  providers: [AppService],
-})
+@Module({ imports: [OrderModule, CoreModule] })
 export class AppModule {}

@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum OrderStatus {
+  PENDING
+  DENIED
+  ACCEPTED
+}
+
+model Order {
+  orderId        String      @id
+  beneficiaryId  String
+  assistantId    String?
+  startDate      DateTime?
+  endDate        DateTime?
+  status         OrderStatus @default(PENDING)
+  address        String?
+  organizationId String
+  serviceId      String
+}

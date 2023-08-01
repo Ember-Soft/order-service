@@ -10,6 +10,14 @@ services:
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     networks:
       - rabbitmq_go_net
+  db:
+    image: 'postgres:15.3-alpine'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=chat-database
+    ports:
+      - '5433:5432'
 
 networks:
   rabbitmq_go_net:
