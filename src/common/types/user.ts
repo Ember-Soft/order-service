@@ -1,4 +1,4 @@
 export interface GemelloUser {
-  userId: string;
+  userId: number;
   userName: string;
 }

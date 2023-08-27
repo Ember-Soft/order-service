@@ -1,42 +1,67 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { OrderStatus } from '@prisma/client';
-import { IsDateString, IsEnum, IsOptional, IsString } from 'class-validator';
+import { HelpType, RequestResponse } from '@prisma/client';
+import {
+  IsDateString,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class OrderGetResponse {
-  @IsString()
-  @ApiProperty()
-  orderId: string;
+  @ApiProperty({ example: 1 })
+  @IsNumber()
+  requestId: number;
 
-  @IsString()
-  @ApiProperty()
-  beneficiaryId: string;
+  @ApiProperty({ example: 1 })
+  @IsNumber()
+  orgId: number;
 
-  @IsString()
-  @IsOptional()
-  @ApiProperty()
-  assistantId: string | undefined;
+  @ApiProperty({ example: RequestResponse.PENDING, enum: RequestResponse })
+  @IsEnum({ enum: RequestResponse })
+  response: RequestResponse;
 
-  @ApiProperty({ example: '2023-07-28T13:48:30Z' })
-  @IsDateString()
-  startDate: string;
+  @ApiProperty({ example: HelpType.TRANSPORT, enum: HelpType })
+  @IsEnum({ enum: HelpType })
+  typeOfHelp: HelpType;
 
   @ApiProperty({ example: '2023-07-29T13:48:30Z' })
   @IsDateString()
-  endDate: string;
+  termFrom: string;
+
+  @ApiProperty({ example: '2023-07-29T13:48:30Z' })
+  @IsDateString()
+  termTo: string;
 
   @ApiProperty({ example: 'ul. Grumwaldzka 11, 51-222 Wrocław' })
   @IsString()
-  address: string;
+  addressFrom: string;
 
-  @ApiProperty({ example: OrderStatus.PENDING, enum: OrderStatus })
-  @IsEnum({ enum: OrderStatus })
-  status: OrderStatus;
-
+  @ApiProperty({ example: 'ul. Grumwaldzka 11, 51-222 Wrocław' })
   @IsString()
-  @ApiProperty()
-  organizationId: string;
+  addressTo: string;
 
-  @IsString()
-  @ApiProperty()
-  serviceId: string;
+  @ApiProperty({ example: '2023-07-29T13:48:30Z' })
+  @IsDateString()
+  createdAt: string;
+
+  @ApiProperty({ example: 1 })
+  @IsNumber()
+  @IsOptional()
+  assistantAssessment: number;
+
+  @ApiProperty({ example: 1 })
+  @IsNumber()
+  @IsOptional()
+  managerId: number;
+
+  @ApiProperty({ example: 1 })
+  @IsNumber()
+  @IsOptional()
+  assistantId: number;
+
+  @ApiProperty({ example: 1 })
+  @IsNumber()
+  @IsOptional()
+  beneficiaryId: number;
 }

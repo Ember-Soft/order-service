@@ -1,28 +1,34 @@
 import { Injectable } from '@nestjs/common';
-import { Order } from '@prisma/client';
 import { PrismaService } from 'src/core/prisma/prisma.service';
+import { Request } from '@prisma/client';
 
 @Injectable()
-export class OrderRepository {
+export class RequestRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  public async getOrderById(orderId: string) {
-    return this.prisma.order.findFirst({ where: { orderId } });
+  public async getOrderById(requestId: number) {
+    return this.prisma.request.findFirst({ where: { requestId } });
   }
 
-  public async createOrder(order: Order) {
-    return this.prisma.order.create({ data: order });
+  public async createRequest(request: Request) {
+    return this.prisma.request.create({ data: request });
   }
 
-  public async updateOrder(orderId, updatedOrder: Order) {
-    return this.prisma.order.update({ where: { orderId }, data: updatedOrder });
+  public async updateOrder(requestId, updatedOrder: Request) {
+    return this.prisma.request.update({
+      where: { requestId },
+      data: updatedOrder,
+    });
   }
 
-  public async deleteOrder(orderId: string) {
-    return this.prisma.order.delete({ where: { orderId } });
+  public async deleteRequest(requestId: number) {
+    return this.prisma.request.delete({
+      where: { requestId },
+      include: { isSharedWith: true },
+    });
   }
 
-  public async getOrders(userId: string) {
-    return this.prisma.order.findMany({ where: { beneficiaryId: userId } });
+  public async getRequests(userId: number) {
+    return this.prisma.request.findMany({});
   }
 }

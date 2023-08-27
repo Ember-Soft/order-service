@@ -10,20 +10,74 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum OrderStatus {
+enum RequestResponse {
   PENDING
-  DENIED
   ACCEPTED
+  REJECTED
 }
 
-model Order {
-  orderId        String      @id
-  beneficiaryId  String
-  assistantId    String?
-  startDate      DateTime?
-  endDate        DateTime?
-  status         OrderStatus @default(PENDING)
-  address        String?
-  organizationId String
-  serviceId      String
+enum HelpType {
+  TRANSPORT
+  HOMECARE
+}
+
+enum MemberRole {
+  MANAGER
+  ASSISTANT
+  BENEFICIARY
+}
+
+model Organization {
+  orgId      Int                    @id @default(autoincrement())
+  name       String
+  consistsOf MemberOfOrganization[]
+  requests   Request[]
+}
+
+model Member {
+  memberId    Int                    @id @default(autoincrement())
+  name        String
+  belongsTo   MemberOfOrganization[]
+  hasAccessTo MemberOfRequest[]
+}
+
+model Request {
+  requestId           Int               @id @default(autoincrement())
+  response            RequestResponse   @default(PENDING)
+  typeOfHelp          HelpType
+  termFrom            DateTime
+  termTo              DateTime
+  addressFrom         String
+  addressTo           String?
+  createdAt           DateTime          @default(now())
+  assistantAssessment Int?
+  isSharedWith        MemberOfRequest[]
+  organization        Organization      @relation(fields: [orgId], references: [orgId])
+  orgId               Int
+  managerId           Int?
+  assistantId         Int?
+  beneficiaryId       Int
+}
+
+model MemberOfOrganization {
+  from         DateTime     @default(now())
+  to           DateTime?
+  role         MemberRole
+  member       Member       @relation(fields: [memberId], references: [memberId])
+  memberId     Int
+  organization Organization @relation(fields: [orgId], references: [orgId])
+  orgId        Int
+
+  @@id([memberId, orgId])
+}
+
+model MemberOfRequest {
+  createdAt DateTime        @default(now())
+  response  RequestResponse
+  request   Request         @relation(fields: [requestId], references: [requestId])
+  requestId Int
+  member    Member          @relation(fields: [memberId], references: [memberId])
+  memberId  Int
+
+  @@id([requestId, memberId])
 }
