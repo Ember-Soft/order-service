@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { OrderController } from './order.controller';
 import { OrderService } from './order.service';
-import { OrderRepository } from './order.repository';
+import { RequestRepository } from './order.repository';
 import { OrganizationModule } from 'src/organization/organization.module';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 
@@ -23,6 +23,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     ]),
   ],
   controllers: [OrderController],
-  providers: [OrderService, OrderRepository],
+  providers: [OrderService, RequestRepository],
 })
 export class OrderModule {}
