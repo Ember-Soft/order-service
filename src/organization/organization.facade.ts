@@ -17,7 +17,7 @@ export class OrganizationFacade implements Facade {
     return true;
   }
 
-  public async getOrganizationConfigForOrder(
+  public async getOrganizationConfigForRequest(
     userContext: GemelloUserContext,
   ): Promise<OrganizationConfig> {
     return {

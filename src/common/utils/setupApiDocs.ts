@@ -4,8 +4,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 export function setupApiDocs(app: INestApplication) {
   const config = new DocumentBuilder()
     .addBearerAuth()
-    .setTitle('Order API')
-    .setDescription('The order api for gemello application')
+    .setTitle('Request API')
+    .setDescription('The request api for gemello application')
     .setVersion('1.0')
     .build();
 

@@ -3,18 +3,18 @@ import { ClientProxy } from '@nestjs/microservices';
 import { Request } from '@prisma/client';
 import { GemelloUser } from 'src/common/types/user';
 import { OrganizationService } from 'src/organization/organization.service';
-import { MappedOrderCreateBody as MappedRequestCreateBody } from './models/orderRequestBody.model';
-import { RequestRepository } from './order.repository';
+import { MappedRequestCreateBody as MappedRequestCreateBody } from './models/requestRequestBody.model';
+import { RequestRepository } from './request.repository';
 
 @Injectable()
-export class OrderService {
+export class RequestService {
   constructor(
     @Inject('CHAT_SERVICE') private readonly chatRabbitClient: ClientProxy,
     private readonly organizationService: OrganizationService,
     private readonly requestRepository: RequestRepository,
   ) {}
 
-  public async createOrder(
+  public async createRequest(
     { termFrom, termTo, orgId, ...request }: MappedRequestCreateBody,
     user: GemelloUser,
   ) {
@@ -35,8 +35,8 @@ export class OrderService {
     } as Request);
   }
 
-  public async deleteRequest(orderId: number) {
-    return this.requestRepository.deleteRequest(orderId);
+  public async deleteRequest(requestId: number) {
+    return this.requestRepository.deleteRequest(requestId);
   }
 
   public async getRequests(userId: number) {

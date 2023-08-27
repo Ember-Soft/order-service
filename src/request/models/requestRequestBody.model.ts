@@ -1,18 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { HelpType, RequestResponse } from '@prisma/client';
-import {
-  IsDateString,
-  IsEnum,
-  IsNumber,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsDateString, IsEnum, IsNumber, IsString } from 'class-validator';
+import { DateTime } from 'luxon';
 
-export class OrderGetResponse {
-  @ApiProperty({ example: 1 })
-  @IsNumber()
-  requestId: number;
-
+export class RequestCreateBody {
   @ApiProperty({ example: 1 })
   @IsNumber()
   orgId: number;
@@ -40,28 +31,10 @@ export class OrderGetResponse {
   @ApiProperty({ example: 'ul. Grumwaldzka 11, 51-222 Wrocław' })
   @IsString()
   addressTo: string;
+}
 
-  @ApiProperty({ example: '2023-07-29T13:48:30Z' })
-  @IsDateString()
-  createdAt: string;
-
-  @ApiProperty({ example: 1 })
-  @IsNumber()
-  @IsOptional()
-  assistantAssessment: number;
-
-  @ApiProperty({ example: 1 })
-  @IsNumber()
-  @IsOptional()
-  managerId: number;
-
-  @ApiProperty({ example: 1 })
-  @IsNumber()
-  @IsOptional()
-  assistantId: number;
-
-  @ApiProperty({ example: 1 })
-  @IsNumber()
-  @IsOptional()
-  beneficiaryId: number;
+export interface MappedRequestCreateBody
+  extends Omit<RequestCreateBody, 'termFrom' | 'termTo'> {
+  termFrom: DateTime;
+  termTo: DateTime;
 }

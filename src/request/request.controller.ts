@@ -3,24 +3,24 @@ import { ApiBearerAuth, ApiBody, ApiResponse } from '@nestjs/swagger';
 import { DateTime } from 'luxon';
 import { User } from 'src/common/decorators/user.decorator';
 import { GemelloUser } from 'src/common/types/user';
-import { OrderGetResponse } from './models/orderGetResponse.model';
-import { RequestCreateBody } from './models/orderRequestBody.model';
-import { OrderService } from './order.service';
+import { RequestGetResponse } from './models/requestGetResponse.model';
+import { RequestCreateBody } from './models/requestRequestBody.model';
+import { RequestService } from './request.service';
 import { Request } from '@prisma/client';
 
 @ApiBearerAuth()
 @Controller('order')
-export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+export class RequestController {
+  constructor(private readonly orderService: RequestService) {}
 
   @Get()
   @ApiResponse({
     status: 200,
     description: 'Ok',
-    type: OrderGetResponse,
+    type: RequestGetResponse,
     isArray: true,
   })
-  public async getOrdersByUserId(@User() user: GemelloUser) {
+  public async getRequestsByUserId(@User() user: GemelloUser) {
     return this.orderService.getRequests(user.userId);
   }
 
@@ -30,7 +30,10 @@ export class OrderController {
     @Body() order: RequestCreateBody,
     @User() user: GemelloUser,
   ): Promise<Request> {
-    return this.orderService.createOrder(this.mapToInternalOrder(order), user);
+    return this.orderService.createRequest(
+      this.mapToInternalOrder(order),
+      user,
+    );
   }
 
   @Delete(':id')
