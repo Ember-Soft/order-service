@@ -9,7 +9,7 @@ import { RequestService } from './request.service';
 import { Request } from '@prisma/client';
 
 @ApiBearerAuth()
-@Controller('order')
+@Controller('request')
 export class RequestController {
   constructor(private readonly orderService: RequestService) {}
 
