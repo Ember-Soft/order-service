@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
+    - uses: actions/checkout@v2
     - name: Deploy using ssh
       uses: appleboy/ssh-action@master
       with:
