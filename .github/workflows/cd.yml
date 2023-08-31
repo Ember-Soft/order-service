@@ -24,6 +24,6 @@ jobs:
           echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
           echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
           echo PORT=3001 >> .env
-          npm i
+          npm ci
           npm run build
           pm2 restart order-service
