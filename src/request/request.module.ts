@@ -1,13 +1,15 @@
 import { Module } from '@nestjs/common';
-import { RequestController } from './request.controller';
-import { RequestService } from './request.service';
-import { RequestRepository } from './request.repository';
-import { OrganizationModule } from 'src/organization/organization.module';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { AssistantOfRequestModule } from 'src/assistantOfRequest/assistantOfRequest.module';
+import { OrganizationModule } from 'src/organization/organization.module';
+import { RequestController } from './request.controller';
+import { RequestRepository } from './request.repository';
+import { RequestService } from './request.service';
 
 @Module({
   imports: [
     OrganizationModule,
+    AssistantOfRequestModule,
     ClientsModule.register([
       {
         name: 'CHAT_SERVICE',

@@ -1,10 +1,17 @@
-import { ForbiddenException, Inject, Injectable } from '@nestjs/common';
+import { AssistantOfRequestService } from './../assistantOfRequest/assistantOfRequest.service';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Request } from '@prisma/client';
 import { GemelloUser } from 'src/common/types/user';
 import { OrganizationService } from 'src/organization/organization.service';
 import { MappedRequestCreateBody as MappedRequestCreateBody } from './models/requestRequestBody.model';
 import { RequestRepository } from './request.repository';
+import { difference } from 'lodash';
 
 @Injectable()
 export class RequestService {
@@ -12,6 +19,7 @@ export class RequestService {
     @Inject('CHAT_SERVICE') private readonly chatRabbitClient: ClientProxy,
     private readonly organizationService: OrganizationService,
     private readonly requestRepository: RequestRepository,
+    private readonly assistantOfRequestService: AssistantOfRequestService,
   ) {}
 
   public async createRequest(
@@ -41,5 +49,15 @@ export class RequestService {
 
   public async getRequests(userId: number) {
     return this.requestRepository.getRequests(userId);
+  }
+
+  public async assignAssistants(id: number, assistantIds: number[]) {
+    const { orgId } = await this.requestRepository.getRequestById(id);
+
+    return this.assistantOfRequestService.assignAssistants({
+      orgId,
+      requestId: id,
+      assistantIds,
+    });
   }
 }

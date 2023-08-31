@@ -6,7 +6,7 @@ import { Request } from '@prisma/client';
 export class RequestRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  public async getOrderById(requestId: number) {
+  public async getRequestById(requestId: number) {
     return this.prisma.request.findFirst({ where: { requestId } });
   }
 
@@ -14,10 +14,10 @@ export class RequestRepository {
     return this.prisma.request.create({ data: request });
   }
 
-  public async updateOrder(requestId, updatedOrder: Request) {
+  public async updateRequest(requestId, updatedRequest: Request) {
     return this.prisma.request.update({
       where: { requestId },
-      data: updatedOrder,
+      data: updatedRequest,
     });
   }
 

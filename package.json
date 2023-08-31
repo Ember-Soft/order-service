@@ -36,6 +36,7 @@
     "luxon": "^3.3.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
+    "ts-mockito": "^2.6.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
@@ -79,6 +80,9 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^src/(.*)$": "<rootDir>/$1"
+    }
   }
 }
