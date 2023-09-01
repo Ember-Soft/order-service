@@ -1,18 +1,17 @@
-import { AssistantOfRequestService } from './../assistantOfRequest/assistantOfRequest.service';
 import {
-  BadRequestException,
   ForbiddenException,
   Inject,
   Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Request } from '@prisma/client';
 import { GemelloUser } from 'src/common/types/user';
 import { OrganizationService } from 'src/organization/organization.service';
-import { MappedRequestCreateBody as MappedRequestCreateBody } from './models/createRequestData.model';
-import { RequestRepository } from './request.repository';
-import { difference } from 'lodash';
+import { AssistantOfRequestService } from './../assistantOfRequest/assistantOfRequest.service';
+import { MappedRequestCreateBody } from './models/createRequestData.model';
 import { PatchRequestData } from './models/patchRequestData.model';
+import { RequestRepository } from './request.repository';
 
 @Injectable()
 export class RequestService {
@@ -45,6 +44,7 @@ export class RequestService {
   }
 
   public async deleteRequest(requestId: number) {
+    await this.checkIfRequestExists(requestId);
     return this.requestRepository.deleteRequest(requestId);
   }
 
@@ -52,12 +52,13 @@ export class RequestService {
     return this.requestRepository.getRequests(userId);
   }
 
-  public async assignAssistants(id: number, assistantIds: number[]) {
-    const { orgId } = await this.requestRepository.getRequestById(id);
+  public async assignAssistants(requestId: number, assistantIds: number[]) {
+    await this.checkIfRequestExists(requestId);
+    const { orgId } = await this.requestRepository.getRequestById(requestId);
 
     return this.assistantOfRequestService.assignAssistants({
       orgId,
-      requestId: id,
+      requestId: requestId,
       assistantIds,
     });
   }
@@ -67,6 +68,16 @@ export class RequestService {
   }
 
   public async patchRequest(requestId: number, patchData: PatchRequestData) {
-    return this.requestRepository.updateRequest(requestId, patchData);
+    await this.checkIfRequestExists(requestId);
+    await this.requestRepository.updateRequest(requestId, patchData);
+  }
+
+  private async checkIfRequestExists(requestId: number) {
+    const request = await this.requestRepository.getRequestById(requestId);
+    if (!request) {
+      throw new NotFoundException(`Cannot find request with id: ${requestId}`);
+    }
+
+    return request;
   }
 }

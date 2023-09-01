@@ -62,7 +62,7 @@ export class RequestController {
     @Param('id') id: string,
     @Body() data: PatchRequestData,
   ) {
-    this.requestService.patchRequest(Number.parseInt(id), data);
+    return this.requestService.patchRequest(Number.parseInt(id), data);
   }
 
   @Post(':id/assistants')
