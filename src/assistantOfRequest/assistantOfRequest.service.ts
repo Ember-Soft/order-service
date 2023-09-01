@@ -1,13 +1,9 @@
+import { ConflictException, Injectable } from '@nestjs/common';
+import { RequestResponse } from '@prisma/client';
+import { difference, intersection } from 'lodash';
+import { DateTime } from 'luxon';
 import { OrganizationService } from 'src/organization/organization.service';
 import { AssistantOfRequestRepository } from './assistantOfRequest.repository';
-import { difference, intersection } from 'lodash';
-import {
-  BadRequestException,
-  ConflictException,
-  Injectable,
-} from '@nestjs/common';
-import { DateTime } from 'luxon';
-import { RequestResponse } from '@prisma/client';
 
 interface AssignAssistantsProps {
   orgId: number;

@@ -41,8 +41,8 @@ describe('AssistantOfRequestService', () => {
       {
         memberId,
         role: 'ASSISTANT',
-        from: DateTime.now().toJSDate(),
-        to: null,
+        since: DateTime.now().toJSDate(),
+        till: null,
         orgId,
       },
     ]);

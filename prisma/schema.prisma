@@ -38,21 +38,21 @@ model Member {
   memberId    Int                    @id @default(autoincrement())
   name        String
   belongsTo   MemberOfOrganization[]
-  hasAccessTo MemberOfRequest[]
+  hasAccessTo AssistantOfRequest[]
 }
 
 model Request {
-  requestId           Int               @id @default(autoincrement())
-  response            RequestResponse   @default(PENDING)
+  requestId           Int                  @id @default(autoincrement())
+  response            RequestResponse      @default(PENDING)
   typeOfHelp          HelpType
   termFrom            DateTime
   termTo              DateTime
   addressFrom         String
   addressTo           String?
-  createdAt           DateTime          @default(now())
+  createdAt           DateTime             @default(now())
   assistantAssessment Int?
-  isSharedWith        MemberOfRequest[]
-  organization        Organization      @relation(fields: [orgId], references: [orgId])
+  isSharedWith        AssistantOfRequest[]
+  organization        Organization         @relation(fields: [orgId], references: [orgId])
   orgId               Int
   managerId           Int?
   assistantId         Int?
@@ -60,8 +60,8 @@ model Request {
 }
 
 model MemberOfOrganization {
-  from         DateTime     @default(now())
-  to           DateTime?
+  since        DateTime     @default(now())
+  till         DateTime?
   role         MemberRole
   member       Member       @relation(fields: [memberId], references: [memberId])
   memberId     Int
@@ -71,7 +71,7 @@ model MemberOfOrganization {
   @@id([memberId, orgId])
 }
 
-model MemberOfRequest {
+model AssistantOfRequest {
   createdAt DateTime        @default(now())
   response  RequestResponse
   request   Request         @relation(fields: [requestId], references: [requestId])
