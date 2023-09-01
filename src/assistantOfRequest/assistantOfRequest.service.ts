@@ -67,4 +67,8 @@ export class AssistantOfRequestService {
 
     return this.assistantOfRequestRepository.createMany(assistantsOfRequest);
   }
+
+  public async getAssignedAssistants(requestId: number) {
+    return this.assistantOfRequestRepository.getMany(requestId);
+  }
 }

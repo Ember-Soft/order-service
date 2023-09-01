@@ -62,6 +62,11 @@ export class RequestController {
     );
   }
 
+  @Get(':id/assistants')
+  public async getAssignedAssistantsToRequest(@Param('id') id: string) {
+    return this.requestService.getAssignedAssistants(Number.parseInt(id));
+  }
+
   private mapToInternalRequest<
     T extends { termFrom?: string; termTo?: string },
   >({ termFrom, termTo, ...request }: T) {

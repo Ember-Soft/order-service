@@ -60,4 +60,8 @@ export class RequestService {
       assistantIds,
     });
   }
+
+  public async getAssignedAssistants(requestId: number) {
+    return this.assistantOfRequestService.getAssignedAssistants(requestId);
+  }
 }

@@ -28,7 +28,7 @@ export class OrganizationService {
       members,
       'role',
     );
-    console.log(members);
+
     const isBeneficiary =
       beneficiares.find(({ memberId }) => memberId === userId) !== undefined;
 
