@@ -1,12 +1,15 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_PIPE } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthGuard } from 'src/common/guards/auth.guard';
 import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
-  providers: [{ provide: APP_GUARD, useClass: AuthGuard }],
+  providers: [
+    { provide: APP_GUARD, useClass: AuthGuard },
+    { provide: APP_PIPE, useValue: new ValidationPipe() },
+  ],
   imports: [
     PrismaModule,
     ConfigModule.forRoot({

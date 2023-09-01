@@ -9,9 +9,10 @@ import { ClientProxy } from '@nestjs/microservices';
 import { Request } from '@prisma/client';
 import { GemelloUser } from 'src/common/types/user';
 import { OrganizationService } from 'src/organization/organization.service';
-import { MappedRequestCreateBody as MappedRequestCreateBody } from './models/requestRequestBody.model';
+import { MappedRequestCreateBody as MappedRequestCreateBody } from './models/createRequestData.model';
 import { RequestRepository } from './request.repository';
 import { difference } from 'lodash';
+import { PatchRequestData } from './models/patchRequestData.model';
 
 @Injectable()
 export class RequestService {
@@ -63,5 +64,9 @@ export class RequestService {
 
   public async getAssignedAssistants(requestId: number) {
     return this.assistantOfRequestService.getAssignedAssistants(requestId);
+  }
+
+  public async patchRequest(requestId: number, patchData: PatchRequestData) {
+    return this.requestRepository.updateRequest(requestId, patchData);
   }
 }

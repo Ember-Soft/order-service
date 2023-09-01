@@ -14,7 +14,7 @@ export class RequestRepository {
     return this.prisma.request.create({ data: request });
   }
 
-  public async updateRequest(requestId, updatedRequest: Request) {
+  public async updateRequest(requestId, updatedRequest: Partial<Request>) {
     return this.prisma.request.update({
       where: { requestId },
       data: updatedRequest,
