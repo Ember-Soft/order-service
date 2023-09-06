@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -82,6 +83,19 @@ export class RequestController {
   @Get(':id/assistants')
   public async getAssignedAssistantsToRequest(@Param('id') id: string) {
     return this.requestService.getAssignedAssistants(Number.parseInt(id));
+  }
+
+  @Patch(':id/assistants')
+  public async patchAssignedAassistantResponse(
+    @User() { userId }: GemelloUser,
+    @Param('id') id: string,
+    @Body() { response }: PatchRequestData,
+  ) {
+    return this.requestService.patchAssignedAssistantResponse({
+      requestId: Number.parseInt(id),
+      userId,
+      response,
+    });
   }
 
   private mapToInternalRequest<

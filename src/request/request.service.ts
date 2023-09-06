@@ -5,13 +5,19 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { Request } from '@prisma/client';
+import { Request, RequestResponse } from '@prisma/client';
 import { GemelloUser } from 'src/common/types/user';
 import { OrganizationService } from 'src/organization/organization.service';
 import { AssistantOfRequestService } from './../assistantOfRequest/assistantOfRequest.service';
 import { MappedRequestCreateBody } from './models/createRequestData.model';
 import { PatchRequestData } from './models/patchRequestData.model';
 import { RequestRepository } from './request.repository';
+
+interface PatchAssistantResponseProps {
+  requestId: number;
+  userId: number;
+  response: RequestResponse;
+}
 
 @Injectable()
 export class RequestService {
@@ -70,6 +76,19 @@ export class RequestService {
   public async patchRequest(requestId: number, patchData: PatchRequestData) {
     await this.checkIfRequestExists(requestId);
     await this.requestRepository.updateRequest(requestId, patchData);
+  }
+
+  public async patchAssignedAssistantResponse({
+    userId,
+    requestId,
+    response,
+  }: PatchAssistantResponseProps) {
+    await this.checkIfRequestExists(requestId);
+    return this.assistantOfRequestService.changeAssistantResponse({
+      assistantId: userId,
+      requestId,
+      response,
+    });
   }
 
   private async checkIfRequestExists(requestId: number) {
