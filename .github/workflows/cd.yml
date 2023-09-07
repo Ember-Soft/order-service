@@ -13,6 +13,7 @@ jobs:
     - name: Deploy using ssh
       uses: appleboy/ssh-action@master
       with:
+        script_stop: true
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.PRIVATE_KEY }}
@@ -24,6 +25,11 @@ jobs:
           echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
           echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
           echo PORT=3001 >> .env
+
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
+          echo "@ember-soft:registry=https://npm.pkg.github.com" >> ~/.npmrc
           npm ci
+          rm -f ~/.npmrc
+
           npm run build
           pm2 restart order-service
