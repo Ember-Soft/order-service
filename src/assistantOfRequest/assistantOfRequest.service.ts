@@ -3,8 +3,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { RequestResponse, AssistantOfRequest } from '@prisma/client';
-import { difference, intersection, pick } from 'lodash';
+import { RequestResponse } from '@prisma/client';
+import { difference, intersection } from 'lodash';
 import { DateTime } from 'luxon';
 import { OrganizationService } from 'src/organization/organization.service';
 import { AssistantOfRequestRepository } from './assistantOfRequest.repository';

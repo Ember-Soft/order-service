@@ -1,5 +1,5 @@
-import { PrismaService } from '@ember-soft/gemello-server-core';
 import { UseRepositoryError } from '@ember-soft/gemello-server-common';
+import { PrismaService } from '@ember-soft/gemello-server-core';
 import { Injectable } from '@nestjs/common';
 import { Request } from '@prisma/client';
 
