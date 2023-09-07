@@ -20,10 +20,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@ember-soft/gemello": "^1.0.3",
     "@ember-soft/gemello-server-common": "^1.0.0",
     "@ember-soft/gemello-server-core": "^1.0.6",
-    "@ember-soft/server": "^1.0.7",
     "@nestjs/common": "^10.1.2",
     "@nestjs/config": "^3.0.0",
     "@nestjs/core": "^10.1.2",
