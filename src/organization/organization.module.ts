@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { OrganizationFacade } from './organization.facade';
 import { OrganizationRepository } from './organization.repository';
 import { OrganizationService } from './organization.service';
 
 @Module({
-  providers: [OrganizationFacade, OrganizationRepository, OrganizationService],
-  exports: [OrganizationFacade, OrganizationService],
+  providers: [OrganizationRepository, OrganizationService],
+  exports: [OrganizationService],
 })
 export class OrganizationModule {}

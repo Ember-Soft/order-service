@@ -1,12 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Transport } from '@nestjs/microservices';
-import { setupApiDocs } from './common/utils/setupApiDocs';
+import { setupApiDocs } from '@ember-soft/gemello-server-core';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('/api');
-  setupApiDocs(app);
+  setupApiDocs(app, {
+    title: 'Request API',
+    description: 'The request api for gemello application',
+    version: '1.0',
+  });
   app.connectMicroservice({
     transport: Transport.RMQ,
     options: {

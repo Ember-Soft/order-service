@@ -1,12 +1,12 @@
 import { Test } from '@nestjs/testing';
 import { RequestResponse } from '@prisma/client';
 import { DateTime } from 'luxon';
-import { PrismaModule } from 'src/core/prisma/prisma.module';
 import { OrganizationModule } from 'src/organization/organization.module';
 import { OrganizationService } from 'src/organization/organization.service';
 import { anything, deepEqual, instance, mock, when } from 'ts-mockito';
 import { AssistantOfRequestRepository } from './assistantOfRequest.repository';
 import { AssistantOfRequestService } from './assistantOfRequest.service';
+import { PrismaModule } from '@ember-soft/gemello-server-core';
 
 describe('AssistantOfRequestService', () => {
   const orgId = 1;

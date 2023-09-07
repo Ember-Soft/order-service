@@ -6,12 +6,12 @@ import {
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Request, RequestResponse } from '@prisma/client';
-import { GemelloUser } from 'src/common/types/user';
 import { OrganizationService } from 'src/organization/organization.service';
 import { AssistantOfRequestService } from './../assistantOfRequest/assistantOfRequest.service';
 import { MappedRequestCreateBody } from './models/createRequestData.model';
 import { PatchRequestData } from './models/patchRequestData.model';
 import { RequestRepository } from './request.repository';
+import { GemelloUser } from '@ember-soft/gemello-server-common';
 
 interface PatchAssistantResponseProps {
   requestId: number;

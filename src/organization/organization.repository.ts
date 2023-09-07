@@ -1,6 +1,6 @@
+import { PrismaService } from '@ember-soft/gemello-server-core';
 import { Injectable } from '@nestjs/common';
 import { MemberOfOrganization, MemberRole } from '@prisma/client';
-import { PrismaService } from 'src/core/prisma/prisma.service';
 
 interface OrgMembersByQuery {
   role?: MemberRole;
