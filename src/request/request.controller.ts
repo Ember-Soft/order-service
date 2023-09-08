@@ -15,12 +15,13 @@ import {
 } from '@nestjs/swagger';
 import { Request } from '@prisma/client';
 import { DateTime } from 'luxon';
+import { GemelloUser, User } from '@ember-soft/gemello-server-common';
+
 import { AssignAssistantsData } from './models/assignAssistantsData.model';
 import { CreateRequestData } from './models/createRequestData.model';
 import { GetRequestData } from './models/getRequestData.model';
 import { PatchRequestData } from './models/patchRequestData.model';
 import { RequestService } from './request.service';
-import { GemelloUser, User } from '@ember-soft/gemello-server-common';
 
 @ApiBearerAuth()
 @Controller('request')

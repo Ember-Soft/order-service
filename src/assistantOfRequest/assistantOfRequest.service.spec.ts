@@ -4,9 +4,10 @@ import { DateTime } from 'luxon';
 import { OrganizationModule } from 'src/organization/organization.module';
 import { OrganizationService } from 'src/organization/organization.service';
 import { anything, deepEqual, instance, mock, when } from 'ts-mockito';
+import { PrismaModule } from '@ember-soft/gemello-server-core';
+
 import { AssistantOfRequestRepository } from './assistantOfRequest.repository';
 import { AssistantOfRequestService } from './assistantOfRequest.service';
-import { PrismaModule } from '@ember-soft/gemello-server-core';
 
 describe('AssistantOfRequestService', () => {
   const orgId = 1;

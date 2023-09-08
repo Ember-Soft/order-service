@@ -34,7 +34,8 @@ export class RequestRepository {
   }
 
   @UseRepositoryError()
-  public async getRequests(userId: number) {
+  /* eslint-disable */
+  public async getRequests(_userId: number) {
     return this.prisma.request.findMany({});
   }
 }
