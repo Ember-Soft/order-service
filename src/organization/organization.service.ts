@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { OrganizationRepository } from './organization.repository';
 import { groupBy } from 'lodash';
+
+import { OrganizationRepository } from './organization.repository';
 
 @Injectable()
 export class OrganizationService {

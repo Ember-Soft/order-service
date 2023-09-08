@@ -1,7 +1,8 @@
-import { RequestModule } from './request/request.module';
 import { Module } from '@nestjs/common';
 import { CoreModule } from '@ember-soft/gemello-server-core';
 import { APP_GUARD } from '@nestjs/core';
+
+import { RequestModule } from './request/request.module';
 import { AuthGuard } from './common/guards/auth.guard';
 
 @Module({
