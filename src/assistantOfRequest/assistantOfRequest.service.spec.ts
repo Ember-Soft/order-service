@@ -1,7 +1,6 @@
 import { Test } from '@nestjs/testing';
 import { RequestResponse } from '@prisma/client';
 import { DateTime } from 'luxon';
-import { OrganizationModule } from 'src/organization/organization.module';
 import { OrganizationService } from 'src/organization/organization.service';
 import { anything, deepEqual, instance, mock, when } from 'ts-mockito';
 import { PrismaModule } from '@ember-soft/gemello-server-core';
@@ -22,8 +21,12 @@ describe('AssistantOfRequestService', () => {
     organizationService = mock(OrganizationService);
 
     const moduleRef = await Test.createTestingModule({
-      imports: [OrganizationModule, PrismaModule],
-      providers: [AssistantOfRequestRepository, AssistantOfRequestService],
+      imports: [PrismaModule],
+      providers: [
+        AssistantOfRequestRepository,
+        AssistantOfRequestService,
+        OrganizationService,
+      ],
     })
       .overrideProvider(AssistantOfRequestRepository)
       .useValue(instance(assistantOfRequestRepository))
